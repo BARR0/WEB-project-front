@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="!this.gameOver">
-      <GameRender />
+      <GameRender :id="this.player.id" :player="this.universe.player" />
       Hello:
       {{universe}}
       <br />
@@ -27,9 +27,17 @@ export default {
   },
   data() {
     return {
-      universe: {},
+      universe: {
+        player: {
+          '-1': {
+            id: -1,
+            x: 0,
+            y: 0,
+          }
+        },
+      },
       player: {
-        id: null
+        id: -1
       },
       gameOver: false,
     };

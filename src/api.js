@@ -28,4 +28,17 @@ export default {
         return err;
       })
   },
+  async putPlayer(id, moves){
+    let data = qs.stringify(moves);
+    return client.put(`player/${id}`, data, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+      }).then(response => {
+        return response.data;
+      }).catch(err => {
+        return err;
+      })
+  },
 };

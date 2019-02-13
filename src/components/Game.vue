@@ -1,6 +1,7 @@
 <template>
   <div>
     <div v-if="!this.gameOver">
+      <GameRender />
       Hello:
       {{universe}}
       <br />
@@ -16,11 +17,13 @@
 
 <script>
 import api from '@/api';
+import GameRender from './GameRender.vue'
 import GameOver from './GameOver.vue'
 
 export default {
   components: {
-    GameOver
+    GameOver,
+    GameRender,
   },
   data() {
     return {

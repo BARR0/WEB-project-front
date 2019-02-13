@@ -12,6 +12,7 @@
     "node-sass": "^4.11.0",
     "query-string": "^6.2.0",
     "sass-loader": "^7.1.0",
+    "two.js": "^0.7.0-beta.3",
     "vue": "^2.5.22"
   },
   "devDependencies": {

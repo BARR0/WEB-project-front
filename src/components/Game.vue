@@ -1,20 +1,27 @@
 <template>
   <div>
-    Hello:
-    {{universe}}
-    <br />
-    Player:
-    {{player}}
-    <br />
-    Game Over:
-    {{gameOver}}
+    <div v-if="!this.gameOver">
+      Hello:
+      {{universe}}
+      <br />
+      Player:
+      {{player}}
+      <br />
+      Game Over:
+      {{gameOver}}
+    </div>
+    <GameOver v-else />
   </div>
 </template>
 
 <script>
 import api from '@/api';
+import GameOver from './GameOver.vue'
 
 export default {
+  components: {
+    GameOver
+  },
   data() {
     return {
       universe: {},

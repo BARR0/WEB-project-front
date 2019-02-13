@@ -38,7 +38,7 @@ export default {
       }).then(response => {
         return response.data;
       }).catch(err => {
-        return err;
+        return {id, err};
       })
   },
 };

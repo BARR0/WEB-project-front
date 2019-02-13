@@ -5,6 +5,9 @@
     <br />
     Player:
     {{player}}
+    <br />
+    Game Over:
+    {{gameOver}}
   </div>
 </template>
 
@@ -16,18 +19,30 @@ export default {
     return {
       universe: {},
       player: {
-        id: {}
+        id: null
       },
+      gameOver: false,
     };
   },
   async created() {
     this.createPlayer('Andres');
+
     this.getUniverse();
+    setInterval(function () {
+      this.getUniverse();
+      this.checkGameOver();
+    }.bind(this), 16);
+
     window.addEventListener('keydown', (e) => {
       this.movePlayer(e.keyCode);
     });
   },
   methods: {
+    async checkGameOver() {
+      if(this.universe.player[this.player.id] == null) {
+        this.gameOver = true;
+      }
+    },
     async getUniverse() {
       const response = await api.getUniverse();
       this.universe = response;

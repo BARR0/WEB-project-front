@@ -78,11 +78,13 @@ export default {
         this.getUniverse();
         this.checkGameOver();
       }.bind(this),
-      16
+      33
     );
 
     window.addEventListener("keydown", e => {
-      this.movePlayer(e.keyCode);
+      if(!this.gameOver) {
+        this.movePlayer(e.keyCode);
+      }
     });
   },
   methods: {

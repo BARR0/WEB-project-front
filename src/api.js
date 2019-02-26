@@ -2,7 +2,7 @@ import axios from 'axios';
 import qs from 'query-string';
 
 const client = axios.create({
-  baseURL: 'http://localhost:8081',
+  baseURL: 'http://10.43.93.177:8081',
 });
 
 export default {

@@ -18,12 +18,12 @@ export default {
   },
   data() {
     return {
-      circles: {},
+      circles: {}
     };
   },
   computed: {
     centered_player() {
-      if(!this.player[this.id]) {
+      if (!this.player[this.id]) {
         return {};
       }
       let px = -this.player[this.id].x + this.two.width / 2;
@@ -32,7 +32,7 @@ export default {
         id: this.player[key].id,
         x: this.player[key].x + px,
         y: -this.player[key].y + py,
-        r: this.player[key].radius * 10,
+        r: this.player[key].radius * 10
       }));
     }
   },
@@ -51,7 +51,7 @@ export default {
       // console.log(circle);
       circle.translation.set(p.x, p.y);
       circle.radius = p.r;
-    },
+    }
   },
   mounted() {
     // let params = { width: 285, height: 200 };
@@ -69,12 +69,14 @@ export default {
       .bind("update", () => {
         let newCircles = {};
         for (let k in this.centered_player) {
-          if(this.circles[this.centered_player[k].id]) {
+          if (this.circles[this.centered_player[k].id]) {
             this.updatePlayer(this.centered_player[k]);
           } else {
             this.drawPlayer(this.centered_player[k]);
           }
-          newCircles[this.centered_player[k].id] = this.circles[this.centered_player[k].id];
+          newCircles[this.centered_player[k].id] = this.circles[
+            this.centered_player[k].id
+          ];
           delete this.circles[this.centered_player[k].id];
         }
         for (let k in this.circles) {

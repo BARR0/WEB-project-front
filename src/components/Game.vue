@@ -1,5 +1,7 @@
 <template>
   <div>
+    <input v-model="playerName" placeholder="Name">
+    <button v-on:click="restart()">Restart</button>
     <div v-if="!this.gameOver">
       <h2>
         Current Leader:
@@ -49,7 +51,8 @@ export default {
       player: {
         id: -1
       },
-      gameOver: false
+      gameOver: false,
+      playerName: "Hola",
     };
   },
   computed: {
@@ -70,9 +73,7 @@ export default {
     }
   },
   async created() {
-    this.createPlayer("Andres");
-
-    this.getUniverse();
+    this.restart();
     setInterval(
       function() {
         this.getUniverse();
@@ -88,6 +89,11 @@ export default {
     });
   },
   methods: {
+    async restart() {
+      this.createPlayer(this.playerName);
+
+      this.getUniverse();
+    },
     async checkGameOver() {
       if (this.universe.player[this.player.id] == null) {
         this.gameOver = true;

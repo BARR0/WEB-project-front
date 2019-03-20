@@ -32,7 +32,8 @@ export default {
         id: this.player[key].id,
         x: this.player[key].x + px,
         y: -this.player[key].y + py,
-        r: this.player[key].radius * 10
+        r: this.player[key].radius * 10,
+        name: this.player[key].name
       }));
     }
   },
@@ -44,6 +45,7 @@ export default {
       } else {
         circle.fill = "rgba(0, 200, 255, 0.75)";
       }
+      circle.text = this.two.makeText(p.name, p.x, p.y + p.r);
       this.circles[p.id] = circle;
     },
     async updatePlayer(p) {
@@ -51,6 +53,12 @@ export default {
       // console.log(circle);
       circle.translation.set(p.x, p.y);
       circle.radius = p.r;
+      if (this.id == p.id) {
+        circle.fill = "#FF8000";
+      } else {
+        circle.fill = "rgba(0, 200, 255, 0.75)";
+      }
+      circle.text.translation.set(p.x, p.y + p.r + 10);
     }
   },
   mounted() {

@@ -63,7 +63,10 @@ export default {
   },
   mounted() {
     // let params = { width: 285, height: 200 };
-    this.two = new Two().appendTo(this.$el);
+    this.two = new Two({
+      // fullscreen: true,
+      // autostart: true
+    }).appendTo(this.$el);
 
     for (let k in this.centered_player) {
       this.drawPlayer(this.centered_player[k]);
@@ -88,6 +91,7 @@ export default {
           delete this.circles[this.centered_player[k].id];
         }
         for (let k in this.circles) {
+          this.two.remove(this.circles[k].text);
           this.two.remove(this.circles[k]);
         }
         this.circles = newCircles;

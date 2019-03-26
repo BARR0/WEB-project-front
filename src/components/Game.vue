@@ -49,10 +49,14 @@ export default {
         }
       },
       player: {
-        id: -1
+        id: -1,
+        x: 0,
+        y: 0,
+        radius: 0
       },
       gameOver: false,
-      playerName: "Hola",
+      playerName: "Player",
+      restartLoading: true,
     };
   },
   computed: {
@@ -76,8 +80,10 @@ export default {
     this.restart();
     setInterval(
       function() {
-        this.getUniverse();
-        this.checkGameOver();
+        if (!this.restartLoading) {
+          this.getUniverse();
+          this.checkGameOver();
+        }
       }.bind(this),
       33
     );
@@ -90,13 +96,17 @@ export default {
   },
   methods: {
     async restart() {
-      this.createPlayer(this.playerName);
-
-      this.getUniverse();
+      this.restartLoading = true;
+      this.gameOver = false;
+      await this.createPlayer(this.playerName);
+      await this.getUniverse();
+      this.restartLoading = false;
     },
     async checkGameOver() {
       if (this.universe.player[this.player.id] == null) {
         this.gameOver = true;
+      } else {
+        this.player = this.universe.player[this.player.id];
       }
     },
     async getUniverse() {

@@ -5,13 +5,31 @@
         <span class="title">Game</span>
         <span class="title">Over</span>
       </h1>
+      <a class="twitter-share-button"
+        :href="'https://twitter.com/intent/tweet?text=' + 'Yay! got a score of ' + this.score + ' on'"
+        data-size="large"
+      >
+        Tweet
+      </a>
     </section>
   </div>
 </template>
 
 <script>
 export default {
-  async created() {
+  props: {
+    score: {
+      type: Number,
+      required: true
+    },
+  },
+  async mounted() {
+    let twitterScript = document.createElement('script')
+    twitterScript.setAttribute('src', 'https://platform.twitter.com/widgets.js')
+    twitterScript.setAttribute('charset', 'utf-8')
+    twitterScript.setAttribute('async', '')
+    document.head.appendChild(twitterScript)
+
     // $(document).ready(function() {
     //   $(".title").lettering();
     //   $(".button").lettering();

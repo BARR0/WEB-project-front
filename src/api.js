@@ -38,7 +38,8 @@ export default {
       }).then(response => {
         return response.data;
       }).catch(err => {
-        return {id, err};
+        // return {id, err};
+        return null;
       })
   },
 };

@@ -1,5 +1,7 @@
 <template>
   <div>
+    <GameRender v-if="!this.gameOver" :id="this.player.id" :player="this.universe.player"/>
+    <GameOver v-else :score="Math.floor(this.player.radius * 100)"/>
     <div class="row">
       <div class="col">
         <div class="form-inline justify-content-center">
@@ -29,8 +31,6 @@
         </h2>
       </div>
     </div>
-    <GameRender v-if="!this.gameOver" :id="this.player.id" :player="this.universe.player"/>
-    <GameOver v-else/>
   </div>
 </template>
 
@@ -149,7 +149,9 @@ export default {
           return;
       }
       const response = await api.putPlayer(this.player.id, moves);
-      this.player = response;
+      if (response) {
+        this.player = response;
+      }
     }
   }
 };

@@ -50,7 +50,6 @@ export default {
     },
     async updatePlayer(p) {
       let circle = this.circles[p.id];
-      // console.log(circle);
       circle.translation.set(p.x, p.y);
       circle.radius = p.r;
       if (this.id == p.id) {
@@ -64,17 +63,12 @@ export default {
   mounted() {
     // let params = { width: 285, height: 200 };
     this.two = new Two({
-      // fullscreen: true,
-      // autostart: true
+      fullscreen: true
     }).appendTo(this.$el);
 
     for (let k in this.centered_player) {
       this.drawPlayer(this.centered_player[k]);
     }
-
-    // let circle = this.two.makeCircle(this.two.width / 2, this.two.height / 2, 50);
-    // circle.fill = "#FF8000";
-    // circle.translation.set(this.two.width / 2, 0);
 
     this.two
       .bind("update", () => {

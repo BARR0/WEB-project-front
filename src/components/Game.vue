@@ -1,27 +1,35 @@
 <template>
   <div>
-    <input v-model="playerName" placeholder="Name">
-    <button v-on:click="restart()">Restart</button>
-    <div v-if="!this.gameOver">
-      <h2>
-        Current Leader:
-        {{this.top_player.name}}
-      </h2>
-      <h2>
-        Max Score:
-        {{Math.floor(this.top_player.score * 100)}}
-      </h2>
-      <GameRender :id="this.player.id" :player="this.universe.player"/>
-      <br/>
-      <h2>
-        Score:
-        {{Math.floor(player.radius * 100)}}
-      </h2>
-      <h3>
-        Player:
-        {{player.name}}
-      </h3>
+    <div class="row">
+      <div class="col">
+        <div class="form-inline justify-content-center">
+          <div class="form-group mb-2">
+            <input class="form-control" v-model="playerName" placeholder="Name">
+            <button class="btn btn-primary" v-on:click="restart()">Restart</button>
+          </div>
+        </div>
+        <br/>
+        <h2>
+          Score:
+          {{Math.floor(player.radius * 100)}}
+        </h2>
+        <h3>
+          Player:
+          {{player.name}}
+        </h3>
+      </div>
+      <div class="col">
+        <h2>
+          Current Leader:
+          {{this.top_player.name}}
+        </h2>
+        <h2>
+          Max Score:
+          {{Math.floor(this.top_player.score * 100)}}
+        </h2>
+      </div>
     </div>
+    <GameRender v-if="!this.gameOver" :id="this.player.id" :player="this.universe.player"/>
     <GameOver v-else/>
   </div>
 </template>

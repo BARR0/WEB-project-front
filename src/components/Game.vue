@@ -7,6 +7,13 @@
         <div class="form-inline justify-content-center">
           <div class="form-group mb-2">
             <input class="form-control" v-model="playerName" placeholder="Name">
+            <div class="dropdown">
+              <a data-toggle="dropdown" class="dropdown-toggle btn btn-danger" href="#">Skins<b class="caret"></b></a>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><a href="#" v-on:click="playerSkin = 1">Skin 1</a></li>
+                <li><a href="#" v-on:click="playerSkin = 2">Skin 2</a></li>
+              </ul>
+            </div>
             <button class="btn btn-primary" v-on:click="restart()">Restart</button>
           </div>
         </div>
@@ -64,6 +71,7 @@ export default {
       },
       gameOver: false,
       playerName: "Player",
+      playerSkin: 1,
       restartLoading: true,
     };
   },
@@ -106,7 +114,7 @@ export default {
     async restart() {
       this.restartLoading = true;
       this.gameOver = false;
-      await this.createPlayer(this.playerName);
+      await this.createPlayer(this.playerName, this.playerSkin);
       await this.getUniverse();
       this.restartLoading = false;
     },
@@ -121,8 +129,8 @@ export default {
       const response = await api.getUniverse();
       this.universe = response;
     },
-    async createPlayer(name) {
-      const response = await api.createPlayer(name);
+    async createPlayer(name, skin) {
+      const response = await api.createPlayer(name, skin);
       this.player = response;
     },
     async movePlayer(keyCode) {
@@ -156,3 +164,52 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+
+.sidebar-nav {
+    padding: 9px 0;
+}
+
+.dropdown-menu .sub-menu {
+    left: 100%;
+    position: absolute;
+    top: 0;
+    visibility: hidden;
+    margin-top: -1px;
+}
+
+.dropdown-menu li:hover .sub-menu {
+    visibility: visible;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.nav-tabs .dropdown-menu, .nav-pills .dropdown-menu, .navbar .dropdown-menu {
+    margin-top: 0;
+}
+
+.navbar .sub-menu:before {
+    border-bottom: 7px solid transparent;
+    border-left: none;
+    border-right: 7px solid rgba(0, 0, 0, 0.2);
+    border-top: 7px solid transparent;
+    left: -7px;
+    top: 10px;
+}
+.navbar .sub-menu:after {
+    border-top: 6px solid transparent;
+    border-left: none;
+    border-right: 6px solid #fff;
+    border-bottom: 6px solid transparent;
+    left: 10px;
+    top: 11px;
+    left: -6px;
+}
+</style>

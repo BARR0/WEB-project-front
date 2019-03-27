@@ -33,30 +33,41 @@ export default {
         x: this.player[key].x + px,
         y: -this.player[key].y + py,
         r: this.player[key].radius * 10,
-        name: this.player[key].name
+        name: this.player[key].name,
+        skin: this.player[key].skin,
       }));
     }
   },
   methods: {
     async drawPlayer(p) {
       let circle = this.two.makeCircle(p.x, p.y, p.r);
-      if (this.id == p.id) {
-        circle.fill = "#FF8000";
-      } else {
-        circle.fill = "rgba(0, 200, 255, 0.75)";
-      }
+      // if (this.id == p.id) {
+      //   circle.fill = "#FF8000";
+      // } else {
+      //   let texture = new Two.Texture(this.getSpriteName(p.skin))
+      //   circle.fill = texture;
+      // }
+      let texture = new Two.Texture(this.getSpriteName(p.skin))
+      texture.scale = .9;
+      circle.fill = texture; 
       circle.text = this.two.makeText(p.name, p.x, p.y + p.r);
       this.circles[p.id] = circle;
+    },
+    getSpriteName(num){
+      if(num == 1){
+        return 'https://i.imgur.com/VY49ncB.jpg'
+        //return `./skin${num}.jpg`
+      }
+       if(num == 2){
+        return 'https://i.imgur.com/DRmh6S9.jpg'
+        //return `./skin${num}.jpg`
+      }
+      return 'https://i.imgur.com/DCZ4inB.jpg'
     },
     async updatePlayer(p) {
       let circle = this.circles[p.id];
       circle.translation.set(p.x, p.y);
       circle.radius = p.r;
-      if (this.id == p.id) {
-        circle.fill = "#FF8000";
-      } else {
-        circle.fill = "rgba(0, 200, 255, 0.75)";
-      }
       circle.text.translation.set(p.x, p.y + p.r + 10);
     }
   },

@@ -61,7 +61,6 @@ export default {
     }
   },
   mounted() {
-    // let params = { width: 285, height: 200 };
     this.two = new Two({
       fullscreen: true
     }).appendTo(this.$el);

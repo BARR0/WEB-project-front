@@ -39,8 +39,14 @@ export default {
       }).then(response => {
         return response.data;
       }).catch(err => {
-        // return {id, err};
-        return null;
+        return err;
+      })
+  },
+  async getStats(){
+    return client.get('stats').then(response => {
+        return response.data;
+      }).catch(err => {
+        return err;
       })
   },
 };

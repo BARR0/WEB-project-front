@@ -157,9 +157,10 @@ export default {
           return;
       }
       const response = await api.putPlayer(this.player.id, moves);
-      if (response) {
-        this.player = response;
+      if (response instanceof Error) {
+        return;
       }
+      this.player = response;
     }
   }
 };

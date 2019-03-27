@@ -1,17 +1,61 @@
 <template>
   <div>
+    <!-- <p>
+      Your score was {{this.score}} while the average score is {{Math.floor(this.stats.avgscore * 100)}}.
+    </p> -->
     <section class="container">
       <h1>
         <span class="title">Game</span>
+        <br />
         <span class="title">Over</span>
       </h1>
+      <br />
+      <br />
+      <br />
+      <h1>
+        Your score was {{this.score}}
+        <br />
+        The average score is {{Math.floor(this.stats.avgscore * 100)}}
+      </h1>
+      <a class="twitter-share-button"
+        :href="'https://twitter.com/intent/tweet?text=' + 'Yay! got a score of ' + this.score + ' on'"
+        data-size="large"
+      >
+        Tweet
+      </a>
     </section>
   </div>
 </template>
 
 <script>
+import api from "@/api";
+
 export default {
+  props: {
+    score: {
+      type: Number,
+      required: true
+    },
+  },
+  data() {
+    return {
+      stats: {
+        avgscore: 0,
+        avgduration: 0,
+      },
+    };
+  },
   async created() {
+    const response = await api.getStats();
+    this.stats = response;
+  },
+  async mounted() {
+    let twitterScript = document.createElement('script')
+    twitterScript.setAttribute('src', 'https://platform.twitter.com/widgets.js')
+    twitterScript.setAttribute('charset', 'utf-8')
+    twitterScript.setAttribute('async', '')
+    document.head.appendChild(twitterScript)
+
     // $(document).ready(function() {
     //   $(".title").lettering();
     //   $(".button").lettering();
@@ -65,7 +109,7 @@ body {
   left: 50%;
   display: block;
   position: absolute;
-  max-width: 225px;
+  // max-width: 525px;
 }
 
 .button {
@@ -90,7 +134,7 @@ body {
 }
 
 h1 {
-  color: #fff;
+  color: #000;
   text-transform: uppercase;
   font-size: 42px;
   margin: 0;

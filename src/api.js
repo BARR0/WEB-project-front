@@ -13,9 +13,10 @@ export default {
         return err;
       })
   },
-  async createPlayer(name){
+  async createPlayer(name, skin){
     let data = qs.stringify({
-      name
+      name,
+      skin
     });
     return client.post('player', data, {
         headers: {
@@ -38,7 +39,14 @@ export default {
       }).then(response => {
         return response.data;
       }).catch(err => {
-        return {id, err};
+        return err;
+      })
+  },
+  async getStats(){
+    return client.get('stats').then(response => {
+        return response.data;
+      }).catch(err => {
+        return err;
       })
   },
 };

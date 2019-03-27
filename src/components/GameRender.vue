@@ -33,45 +33,53 @@ export default {
         x: this.player[key].x + px,
         y: -this.player[key].y + py,
         r: this.player[key].radius * 10,
-        name: this.player[key].name
+        name: this.player[key].name,
+        skin: this.player[key].skin,
       }));
     }
   },
   methods: {
     async drawPlayer(p) {
       let circle = this.two.makeCircle(p.x, p.y, p.r);
-      if (this.id == p.id) {
-        circle.fill = "#FF8000";
-      } else {
-        circle.fill = "rgba(0, 200, 255, 0.75)";
-      }
+      // if (this.id == p.id) {
+      //   circle.fill = "#FF8000";
+      // } else {
+      //   let texture = new Two.Texture(this.getSpriteName(p.skin))
+      //   circle.fill = texture;
+      // }
+      let texture = new Two.Texture(this.getSpriteName(p.skin))
+      texture.scale = .9;
+      circle.fill = texture; 
       circle.text = this.two.makeText(p.name, p.x, p.y + p.r);
       this.circles[p.id] = circle;
     },
+    getSpriteName(num){
+      if(num == 1){
+        return 'https://i.imgur.com/VY49ncB.jpg'
+        //return `./skin${num}.jpg`
+      }
+       if(num == 2){
+        return 'https://i.imgur.com/DRmh6S9.jpg'
+        //return `./skin${num}.jpg`
+      }
+      return 'https://i.imgur.com/DCZ4inB.jpg'
+    },
     async updatePlayer(p) {
       let circle = this.circles[p.id];
-      // console.log(circle);
       circle.translation.set(p.x, p.y);
       circle.radius = p.r;
-      if (this.id == p.id) {
-        circle.fill = "#FF8000";
-      } else {
-        circle.fill = "rgba(0, 200, 255, 0.75)";
-      }
       circle.text.translation.set(p.x, p.y + p.r + 10);
     }
   },
   mounted() {
     // let params = { width: 285, height: 200 };
-    this.two = new Two().appendTo(this.$el);
+    this.two = new Two({
+      fullscreen: true
+    }).appendTo(this.$el);
 
     for (let k in this.centered_player) {
       this.drawPlayer(this.centered_player[k]);
     }
-
-    // let circle = this.two.makeCircle(this.two.width / 2, this.two.height / 2, 50);
-    // circle.fill = "#FF8000";
-    // circle.translation.set(this.two.width / 2, 0);
 
     this.two
       .bind("update", () => {
@@ -88,6 +96,7 @@ export default {
           delete this.circles[this.centered_player[k].id];
         }
         for (let k in this.circles) {
+          this.two.remove(this.circles[k].text);
           this.two.remove(this.circles[k]);
         }
         this.circles = newCircles;

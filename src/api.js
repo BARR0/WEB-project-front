@@ -2,7 +2,7 @@ import axios from 'axios';
 import qs from 'query-string';
 
 const client = axios.create({
-  baseURL: process.env.VUE_APP_API_URL,
+  baseURL: 'https://labweb-back.herokuapp.com/',
 });
 
 export default {

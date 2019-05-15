@@ -67,7 +67,7 @@
         The controls are:
       </p>
       <ul>
-        <li>Use the arrow keys to move. The direction you press is the one the circle will move in.</li>
+        <li>Use the arrow keys to move. The direction you press is the one the circle will move in. Hold it to be launched!</li>
         <li>Press the spacebar to show an emote in case you want to show off.</li>
       </ul>
       <p class="my-4">
@@ -150,6 +150,12 @@ export default {
     window.addEventListener("keydown", e => {
       if (!this.gameOver) {
         this.movePlayer(e.keyCode);
+      }
+    });
+
+    window.addEventListener("keyup", e => {
+      if (!this.gameOver && e.keyCode != 32) {
+        this.movePlayer(null);
       }
     });
   },
@@ -240,8 +246,8 @@ export default {
             }, 2000);
           }
           return;
-        default:
-          return;
+        // default:
+        //   return;
       }
       const response = await api.putPlayer(this.player.id, moves);
       if (response instanceof Error) {

@@ -15,7 +15,7 @@
       <h1>
         Your score was {{this.score}}
         <br />
-        The average score is {{Math.floor(this.stats.avgscore * 100)}}
+        The average global score is {{Math.floor(this.stats.avgscore * 100)}}
       </h1>
       <a class="twitter-share-button"
         :href="'https://twitter.com/intent/tweet?text=' + 'Yay! got a score of ' + this.score + ' on'"
@@ -23,18 +23,24 @@
       >
         Tweet
       </a>
+      <h2>Your other scores this session are:</h2>
+      <h3 v-for="(score, index) in this.history" :key="`score-${index}`">{{score}}</h3>
     </section>
   </div>
 </template>
 
 <script>
 import api from "@/api";
+import gameOverSound from '../assets/gameover.wav'
 
 export default {
   props: {
     score: {
       type: Number,
       required: true
+    },
+    history: {
+      type: Array,
     },
   },
   data() {
@@ -48,6 +54,7 @@ export default {
   async created() {
     const response = await api.getStats();
     this.stats = response;
+    (new Audio(gameOverSound)).play();
   },
   async mounted() {
     let twitterScript = document.createElement('script')
